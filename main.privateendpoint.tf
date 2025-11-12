@@ -15,7 +15,7 @@ resource "azurerm_private_endpoint" "this_managed_dns_zone_groups" {
   private_service_connection {
     is_manual_connection           = false
     name                           = each.value.private_service_connection_name != null ? each.value.private_service_connection_name : "pse-${var.name}"
-    private_connection_resource_id = azurerm_mysql_flexible_server.this.id
+    private_connection_resource_id = local.mysql_server.id
     subresource_names              = [each.value.subresource_name]
   }
   dynamic "ip_configuration" {
@@ -54,7 +54,7 @@ resource "azurerm_private_endpoint" "this_unmanaged_dns_zone_groups" {
   private_service_connection {
     is_manual_connection           = false
     name                           = each.value.private_service_connection_name != null ? each.value.private_service_connection_name : "pse-${var.name}"
-    private_connection_resource_id = azurerm_mysql_flexible_server.this.id
+    private_connection_resource_id = local.mysql_server.id
     subresource_names              = [each.value.subresource_name]
   }
   dynamic "ip_configuration" {

@@ -9,11 +9,11 @@ resource "azurerm_mysql_flexible_server_active_directory_administrator" "this" {
 
   identity_id = coalesce(
     var.active_directory_administrator.identity_id,
-    length(azurerm_mysql_flexible_server.this.identity[0].identity_ids) > 0 ? tolist(azurerm_mysql_flexible_server.this.identity[0].identity_ids)[0] : null
+    length(local.mysql_server.identity[0].identity_ids) > 0 ? tolist(local.mysql_server.identity[0].identity_ids)[0] : null
   )
   login     = var.active_directory_administrator.login
   object_id = var.active_directory_administrator.object_id
-  server_id = azurerm_mysql_flexible_server.this.id
+  server_id = local.mysql_server.id
   tenant_id = var.active_directory_administrator.tenant_id
 
   # Support optional custom timeouts supplied via var.active_directory_administrator.timeouts
@@ -30,7 +30,7 @@ resource "azurerm_mysql_flexible_server_active_directory_administrator" "this" {
 
   # Explicit dependency to ensure server (and its identities) exist before assigning AAD administrator.
   depends_on = [
-    azurerm_mysql_flexible_server.this,
+    local.mysql_server,
     time_sleep.wait_for_server_identity
   ]
 }

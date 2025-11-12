@@ -12,4 +12,9 @@ locals {
   ]) : "${assoc.pe_key}-${assoc.asg_key}" => assoc }
   #resource_group_location            = try(data.azurerm_resource_group.parent[0].location, null)
   role_definition_resource_substring = "/providers/Microsoft.Authorization/roleDefinitions"
+  #set azurerm_mysql_flexible_server instance
+  mysql_server = one(coalesce(
+    azurerm_mysql_flexible_server.this_auto_grow[*],
+    azurerm_mysql_flexible_server.this_manual_grow[*]
+  ))
 }

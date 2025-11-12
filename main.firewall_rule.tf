@@ -3,8 +3,8 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "this" {
 
   end_ip_address      = each.value.end_ip_address
   name                = each.key
-  resource_group_name = azurerm_mysql_flexible_server.this.resource_group_name
-  server_name         = azurerm_mysql_flexible_server.this.name
+  resource_group_name = local.mysql_server.resource_group_name
+  server_name         = local.mysql_server.name
   start_ip_address    = each.value.start_ip_address
 
   dynamic "timeouts" {
