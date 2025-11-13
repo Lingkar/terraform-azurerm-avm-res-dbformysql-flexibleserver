@@ -166,6 +166,10 @@ resource "azurerm_mysql_flexible_server" "this_auto_grow" {
       update = timeouts.value.update
     }
   }
+
+  lifecycle {
+    ignore_changes = [storage[0].size_gb]
+  }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
