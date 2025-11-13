@@ -167,6 +167,7 @@ resource "azurerm_mysql_flexible_server" "this_auto_grow" {
     }
   }
 
+  # Ignore changes in storage size_gb changes as the auto_grow_enabled feature is true
   lifecycle {
     ignore_changes = [storage[0].size_gb]
   }
