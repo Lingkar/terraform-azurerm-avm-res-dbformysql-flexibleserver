@@ -9,6 +9,6 @@ output "name" {
 }
 
 output "fqdn" {
-  description = "The name of the resource"
+  description = "The fully qualified domain name of the resource"
   value       = local.mysql_server.fqdn
 }
